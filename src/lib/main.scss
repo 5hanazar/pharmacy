@@ -1,0 +1,19 @@
+$primary: #1c8d4f;
+@import "bootstrap/scss/bootstrap";
+
+.carousel-item>img {
+	height: 56vw;
+	object-position: left;
+	object-fit: cover;
+}
+section {
+	display: grid;
+	padding: 1rem 0;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1rem;
+}
+@media only screen and (max-width: 992px) {
+	section {
+		grid-template-columns: 1fr 1fr;
+	}
+}

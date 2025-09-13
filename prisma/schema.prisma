@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Member {
+    id          Int     @id @default(autoincrement())
+    active      Boolean
+    username    String  @unique @db.VarChar(32)
+    password    String  @db.VarChar(32)
+    name        String  @db.VarChar(64)
+    description String  @db.VarChar(128)
+    createdGmt  Int
+    onlineGmt   Int
+
+    @@map("members")
+}
+
+model Client {
+    id          Int     @id @default(autoincrement())
+    active      Boolean
+    username    String  @unique @db.VarChar(32)
+    phone       String  @unique @db.VarChar(32)
+    name        String  @db.VarChar(64)
+    description String  @db.VarChar(128)
+    address     String  @db.VarChar(128)
+    devicesJ    String  @db.VarChar(128)
+    hashJwt     String  @db.VarChar(8)
+    createdGmt  Int
+    modifiedGmt Int
+    imageGmt    Int
+    onlineGmt   Int
+
+    @@map("clients")
+}
+
+model TempCode {
+    phone      String @db.VarChar(32)
+    code       String @db.VarChar(8)
+    createdGmt Int
+
+    @@id([phone, createdGmt])
+    @@map("tempcodes")
+}
+
+model Product {
+    id            Int     @id @default(autoincrement())
+    active        Boolean
+    barcode       String  @unique @db.VarChar(32)
+    namesJ        String  @db.VarChar(400)
+    descriptionsJ String  @db.VarChar(1200)
+    keywords      String  @db.VarChar(128)
+    sortIndex     Int
+    imagesJ       String  @db.VarChar(128)
+    createdGmt    Int
+    modifiedGmt   Int
+
+    @@map("products")
+}
+
+model Category {
+    id            Int     @id @default(autoincrement())
+    active        Boolean
+    code          String  @unique @db.VarChar(128)
+    parentCode    String  @db.VarChar(128)
+    namesJ        String  @db.VarChar(400)
+    descriptionsJ String  @db.VarChar(1200)
+    createdGmt    Int
+    modifiedGmt   Int
+
+    @@map("categories")
+}
