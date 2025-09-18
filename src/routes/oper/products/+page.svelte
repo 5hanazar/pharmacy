@@ -26,6 +26,7 @@
 		{ key: "names", value: "Names", sort: false },
 		{ key: "descriptions", value: "Descriptions", sort: false },
 		{ key: "keywords", value: "Keywords", sort: _ab0 },
+		{ key: "price", value: "Price", sort: _ab0 },
 		{ key: "sortIndex", value: "Sort Index", sort: _ab0 },
 		{ key: "images", value: "Images", sort: _ab0 },
 		{ key: "createdDate", value: "Created Date", sort: false },
@@ -69,7 +70,7 @@
 				{#each cell.value as e}
 					{#if e.length > 50}
 						{e.substring(0, 50)}...<br/>
-					{:else}
+					{:else if e.length != 0}
 						{e.substring()}<br/>
 					{/if}
 				{/each}

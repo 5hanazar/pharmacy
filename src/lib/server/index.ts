@@ -16,6 +16,7 @@ export const convertProduct = async (e: any): Promise<ProductDto> => {
 		names: JSON.parse(e.namesJ),
 		descriptions: JSON.parse(e.descriptionsJ),
 		keywords: e.keywords,
+		price: e.price,
 		sortIndex: e.sortIndex,
 		images: JSON.parse(e.imagesJ),
 		createdDate: formatTime(e.createdGmt),
@@ -135,6 +136,7 @@ export type ProductDto = {
 	names: string[];
 	descriptions: string[];
 	keywords: string;
+	price: number;
 	sortIndex: number;
 	images: string[];
 	createdDate: string;
@@ -154,6 +156,7 @@ export type ProductDtoView = {
 	barcode: string;
 	name: string;
 	description: string;
+	price: number;
 	images: string[];
 };
 

@@ -20,6 +20,7 @@ export async function load({ locals }) {
 				barcode: e.barcode,
 				name: JSON.parse(e.namesJ)[lang],
 				description: JSON.parse(e.descriptionsJ)[lang],
+				price: e.price,
 				images: JSON.parse(e.imagesJ),
 			};
 		})

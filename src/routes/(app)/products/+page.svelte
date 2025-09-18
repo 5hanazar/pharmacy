@@ -3,7 +3,7 @@
 	export let data;
 </script>
 
-<div class="container bread"><span>Все продукты</span> > <a href="#">{data.groupName}</a></div>
+<div class="container bread">{data.groupName}</div>
 <section class="container products">
 	{#each data.result as product}
 		{#key product.id}

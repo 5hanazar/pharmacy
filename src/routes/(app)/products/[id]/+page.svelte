@@ -12,15 +12,15 @@
 
 <div class="container py-5">
 	{#key data.product.id}
-	<div class="d-flex flex-lg-row flex-column align-items-center gap-4">
+	<div class="d-flex flex-lg-row flex-column align-items-center">
 		<div class="col-lg-6">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<img src={data.product.images.length == 0 ? `/no_image.webp` : `/images/${data.product.images[0]}`} class="d-block mx-lg-auto img-fluid" draggable="false" alt={data.product.name} on:error={(e) => e.target.src = "/no_image.webp"} on:click={() => showZoom = true} />
 		</div>
-		<div class="col-lg-6">
-			<h3 class="display-3">{data.product.name}</h3>
-			<p class="lead m-0 description">{data.product.description}</p>
+		<div class="col-lg-6 pt-4 pt-lg-0 ps-lg-4">
+			<h1 class="display-5">{data.product.name}</h1>
+			<p class="lead m-0 description">{data.product.price}</p>
 		</div>
 	</div>
 	<section class="products">
@@ -40,7 +40,6 @@
 	section > h3 {
 		display: inline-block;
 		grid-column: 1/-1;
-		margin-top: 1rem;
 		margin-bottom: 0;
 	}
 	.description {
@@ -51,18 +50,17 @@
 		top: 24px;
 		right: 32px;
 		z-index: 11;
-		background: #fff;
+		background: #ffffffdd;
 		border: none;
 		border-radius: 50%;
 		width: 40px;
 		height: 40px;
+		font-family: none;
 		font-size: 2rem;
-		line-height: 1;
 		cursor: pointer;
 		box-shadow: 0 2px 8px #0003;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		opacity: 0.9;
 	}
 </style>

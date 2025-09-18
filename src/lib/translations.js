@@ -11,6 +11,7 @@ export default {
 		"navigation": "Navigation",
 		"contacts": "Contacts",
 		"address": "Address",
+		"purchase": "Purchase",
 	},
 	ru: {
 		"categories": "Категории",
@@ -24,6 +25,7 @@ export default {
 		"navigation": "Навигация",
 		"contacts": "Контакты",
 		"address": "Адрес",
+		"purchase": "Купить",
 	},
 	tk: {
 		"categories": "Kategoriýa",
@@ -37,5 +39,6 @@ export default {
 		"navigation": "Nawigasiýa",
 		"contacts": "Kontaktlar",
 		"address": "Salgy",
+		"purchase": "Satyn al",
 	},
 };

@@ -58,6 +58,7 @@ model Product {
     namesJ        String  @db.VarChar(400)
     descriptionsJ String  @db.VarChar(1200)
     keywords      String  @db.VarChar(128)
+    price         Float
     sortIndex     Int
     imagesJ       String  @db.VarChar(128)
     createdGmt    Int

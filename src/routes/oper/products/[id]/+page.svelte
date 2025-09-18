@@ -104,9 +104,9 @@
 			</div>
 		</div>
 		<TextInput labelText="Штрих-код" bind:value={data.result.barcode} inline={true} required />
-		<TextInput labelText="Название (English)" bind:value={data.result.names[0]} inline={true} required />
-		<TextInput labelText="Название (Русский)" bind:value={data.result.names[1]} inline={true} required />
-		<TextInput labelText="Назв. (Türkmençe)" bind:value={data.result.names[2]} inline={true} required />
+		<TextInput labelText="Название (English)" bind:value={data.result.names[0]} inline={true} />
+		<TextInput labelText="Название (Русский)" bind:value={data.result.names[1]} inline={true} />
+		<TextInput labelText="Назв. (Türkmençe)" bind:value={data.result.names[2]} inline={true} />
 		<TextArea labelText="Описание (English)" bind:value={data.result.descriptions[0]} maxCount={590} />
 		<TextArea labelText="Описание (Русский)" bind:value={data.result.descriptions[1]} maxCount={590} />
 		<TextArea labelText="Описание (Türkmençe)" bind:value={data.result.descriptions[2]} maxCount={590} />

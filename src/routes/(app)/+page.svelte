@@ -8,12 +8,4 @@
 </script>
 
 <style>
-	.factory {
-		border-radius: 2rem;
-	}
-	@media only screen and (min-width: 1400px) {
-		.lead {
-			font-size: 1.5rem
-		}
-	}
 </style>

@@ -132,6 +132,7 @@
 								{$t("categories")}
 							</button>
 							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="/products">Все</a></li>
 								{#each data.categories as category}
 									<li><a class="dropdown-item" href="/products?g={category.code}">{category.name}</a></li>
 								{/each}

@@ -75,6 +75,7 @@ export async function POST({ request, locals }) {
 				namesJ: JSON.stringify(body.names),
 				descriptionsJ: JSON.stringify(body.descriptions),
 				keywords: body.keywords,
+				price: 0,
 				sortIndex: body.sortIndex,
 				imagesJ: "[]",
 				createdGmt: getTimestampGMT(),
