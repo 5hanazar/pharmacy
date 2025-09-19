@@ -5,14 +5,35 @@ import { json } from '@sveltejs/kit';
 
 export async function GET({ url, locals }) {
 	const lang: number = locals.lang
-	const groupName = url.searchParams.get("g") || "";
-	const products = await prisma.product.findMany({
-		where: {
-			active: true,
-			keywords: {
-				contains: groupName
+
+	const query = url.searchParams.get("q") || "";
+	const groupCode = url.searchParams.get("g") || "";
+
+	let where: any = {
+		active: true,
+	}
+	if (query.length > 0) {
+		where['OR'] = [
+			{
+				namesJ: {
+					contains: query
+				}
+			},
+			{
+				descriptionsJ: {
+					contains: query
+				}
 			}
-		},
+		]
+	}
+	else if (groupCode.length > 0) {
+		where['keywords'] = {
+			contains: groupCode
+		}
+	}
+
+	const products = await prisma.product.findMany({
+		where,
 		orderBy: {
 			sortIndex: 'desc'
 		}
@@ -30,5 +51,5 @@ export async function GET({ url, locals }) {
 		})
 	);
 
-	return json({ result: result, groupName });
+	return json({ result: result, groupCode });
 }
