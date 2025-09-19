@@ -1,22 +1,24 @@
 <script lang="ts">
+	import Pager from '$lib/Pager.svelte';
 	import ProductCard from '$lib/ProductCard.svelte';
-	export let data;
+	export let data: any //{ result: Paged<ProductDtoView>, groupCode: string };
 </script>
 
-<div class="container bread">{data.groupCode}</div>
-<section class="container products">
-	{#each data.result as product}
+<section class="container">
+	<h3>{data.groupCode}</h3>
+	{#each data.result.data as product}
 		{#key product.id}
 			<ProductCard product={product} />
 		{/key}
 	{/each}
+	<Pager result={data.result} link="/products" />
 </section>
 
 <style lang="scss">
-	.bread {
-		font-size: 1.5rem;
-		margin-top: 1rem;
-		margin-bottom: 0.5rem;
-		font-weight: bold;
+	h3 {
+		display: inline-block;
+		grid-column: 1/-1;
+		margin-bottom: 0;
+		text-align: center;
 	}
 </style>

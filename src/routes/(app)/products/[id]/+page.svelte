@@ -23,7 +23,7 @@
 			<p class="lead m-0 description">{data.product.price}</p>
 		</div>
 	</div>
-	<section class="products">
+	<section>
 		<h3>{$t("similar")}</h3>
 		{#each data.similar as product}
 			<ProductCard product={product} />
