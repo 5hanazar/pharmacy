@@ -58,12 +58,13 @@ export async function GET({ url, locals }) {
 	const count = await prisma.product.count({
 		where
 	});
-	const result: Paged<ProductDtoView> & { query: string } = {
+	const result: Paged<ProductDtoView> & { query: string, groupCode: string } = {
 		count,
 		data: data,
 		size,
 		pageIndex,
-		query: query.length > 0 ? `q=${query}` : `g=${groupCode}`
+		query: query.length > 0 ? `q=${query}` : `g=${groupCode}`,
+		groupCode: groupCode.length > 0 ? groupCode : 'all'
 	};
-	return json({ result: result, groupCode: groupCode.length > 0 ? groupCode : 'all' });
+	return json(result);
 }

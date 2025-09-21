@@ -6,12 +6,12 @@
 
 <section class="container">
 	<h3>{data.groupCode}</h3>
-	{#each data.result.data as product}
+	{#each data.data as product}
 		{#key product.id}
 			<ProductCard product={product} />
 		{/key}
 	{/each}
-	<Pager result={data.result} link="/products" />
+	<Pager result={data} link="/products" />
 </section>
 
 <style lang="scss">
