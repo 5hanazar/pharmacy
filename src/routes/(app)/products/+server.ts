@@ -43,6 +43,11 @@ export async function GET({ url, locals }) {
 			sortIndex: 'desc'
 		}
 	});
+	const categories = await prisma.category.findMany({
+		where: {
+			active: true
+		}
+	});
 	const data: ProductDtoView[] = await Promise.all(
 		products.map(async (e) => {
 			return {
@@ -50,6 +55,7 @@ export async function GET({ url, locals }) {
 				barcode: e.barcode,
 				name: JSON.parse(e.namesJ)[lang],
 				description: JSON.parse(e.descriptionsJ)[lang],
+				groupName: JSON.parse(categories.find(o => o.code == e.keywords)?.namesJ ?? "")[lang],
 				price: e.price,
 				images: JSON.parse(e.imagesJ),
 			};

@@ -156,6 +156,7 @@ export type ProductDtoView = {
 	barcode: string;
 	name: string;
 	description: string;
+	groupName: string;
 	price: number;
 	images: string[];
 };
