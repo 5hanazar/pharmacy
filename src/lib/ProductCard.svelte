@@ -3,7 +3,7 @@
 	export let product: any;
 </script>
 
-<div class="card border-0">
+<div class="card">
 	<a href={`/products/${product.id}`}><img src={product.images.length == 0 ? `/no_image.webp` : `/images/${product.images[0]}`} class="card-img-top p-3" alt="" on:error={(e) => e.target.src = "/no_image.webp"} /></a>
 	<div class="card-body pt-0">
 		<h5 class="card-title mt-0">

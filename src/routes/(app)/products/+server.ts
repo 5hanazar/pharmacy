@@ -63,13 +63,13 @@ export async function GET({ url, locals }) {
 	const count = await prisma.product.count({
 		where
 	});
-	const result: Paged<ProductDtoView> & { query: string, groupCode: string } = {
+	const result: Paged<ProductDtoView> & { query: string, groupName: string } = {
 		count,
 		data: data,
 		size,
 		pageIndex,
 		query: query.length > 0 ? `q=${query}` : `g=${groupCode}`,
-		groupCode: groupCode.length > 0 ? groupCode : 'all'
+		groupName: groupCode.length > 0 ? JSON.parse(categories.find(o => o.code == groupCode)?.namesJ ?? "")[lang] : 'all'
 	};
 	return json(result);
 }

@@ -10,9 +10,9 @@
 	});
 </script>
 
-<div class="container py-5">
+<div class="container pb-4">
 	{#key data.product.id}
-	<div class="d-flex flex-lg-row flex-column align-items-center">
+	<div class="d-flex flex-lg-row flex-column align-items-center my-5">
 		<div class="col-lg-6">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
