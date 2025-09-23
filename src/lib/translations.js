@@ -12,6 +12,7 @@ export default {
 		"contacts": "Contacts",
 		"address": "Address",
 		"purchase": "Purchase",
+		"all_products": "All products",
 	},
 	ru: {
 		"categories": "Категории",
@@ -26,6 +27,7 @@ export default {
 		"contacts": "Контакты",
 		"address": "Адрес",
 		"purchase": "Купить",
+		"all_products": "Все продукты",
 	},
 	tk: {
 		"categories": "Kategoriýa",
@@ -40,5 +42,6 @@ export default {
 		"contacts": "Kontaktlar",
 		"address": "Salgy",
 		"purchase": "Satyn al",
+		"all_products": "Ähli dermanlar",
 	},
 };

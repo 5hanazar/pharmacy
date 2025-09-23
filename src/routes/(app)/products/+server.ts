@@ -1,5 +1,6 @@
 /** @type {import('./$types').RequestHandler} */
 import prisma from '$lib/server';
+import translations from '$lib/translations.js';
 import { json } from '@sveltejs/kit';
 
 export async function GET({ url, locals }) {
@@ -28,7 +29,7 @@ export async function GET({ url, locals }) {
 			}
 		]
 	}
-	else if (groupCode.length > 0) {
+	if (groupCode.length > 0) {
 		where['keywords'] = {
 			contains: groupCode
 		}
@@ -63,13 +64,16 @@ export async function GET({ url, locals }) {
 	const count = await prisma.product.count({
 		where
 	});
+
+	const langMap = ["en", "ru", "tk"];
+	const locale = langMap[lang] || "en";
 	const result: Paged<ProductDtoView> & { query: string, groupName: string } = {
 		count,
 		data: data,
 		size,
 		pageIndex,
 		query: query.length > 0 ? `q=${query}` : `g=${groupCode}`,
-		groupName: groupCode.length > 0 ? JSON.parse(categories.find(o => o.code == groupCode)?.namesJ ?? "")[lang] : 'all'
+		groupName: groupCode.length > 0 ? JSON.parse(categories.find(o => o.code == groupCode)?.namesJ ?? "")[lang] : translations[locale]['all_products']
 	};
 	return json(result);
 }
