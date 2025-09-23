@@ -107,7 +107,7 @@
 	<Preloader />
 {/if}
 <main class="flex-fill">
-	<div class="sticky-top bg-primary z-1 shadow">
+	<div class="sticky-top bg-primary z-2 shadow">
 		<header class="navbar navbar-expand-lg" data-bs-theme="dark">
 			<div class="container">
 				<a href="/" class="navbar-brand d-flex gap-3 text-decoration-none align-items-center text-white">

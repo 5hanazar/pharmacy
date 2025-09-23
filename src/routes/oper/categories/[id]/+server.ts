@@ -1,5 +1,5 @@
 /** @type {import('./$types').RequestHandler} */
-import prisma, { convertCategory, type CategoryDto } from "$lib/server";
+import prisma, { convertCategory } from "$lib/server";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ params }) {

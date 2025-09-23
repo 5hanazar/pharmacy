@@ -1,6 +1,6 @@
 import * as cookie from "cookie";
 import jwt from "jsonwebtoken";
-import prisma, { getTimestampGMT, type ClientDtoView } from "$lib/server";
+import prisma, { getTimestampGMT } from "$lib/server";
 import { PRIVATE_KEY } from "$env/static/private";
 import type { Client } from "@prisma/client";
 import { base } from "$app/paths";

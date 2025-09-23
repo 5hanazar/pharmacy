@@ -1,6 +1,5 @@
 /** @type {import('./$types').RequestHandler} */
 import prisma from "$lib/server";
-import type { ProductDtoView } from "$lib/server/index.js";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ params, locals }) {
@@ -17,6 +16,7 @@ export async function GET({ params, locals }) {
 		barcode: e.barcode,
 		name: JSON.parse(e.namesJ)[lang],
 		description: JSON.parse(e.descriptionsJ)[lang],
+		groupName: "",
 		price: e.price,
 		images: JSON.parse(e.imagesJ),
 	};

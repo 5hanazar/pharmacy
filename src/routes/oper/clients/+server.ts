@@ -1,5 +1,5 @@
 /** @type {import('./$types').RequestHandler} */
-import prisma, { formatTime, getRelativeTime, getTimestampGMT, type ClientDto, type Paged, type PostClientDto } from "$lib/server";
+import prisma, { formatTime, getRelativeTime, getTimestampGMT } from "$lib/server";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ url }) {

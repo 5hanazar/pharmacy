@@ -1,4 +1,3 @@
-import type { CategoryDto, Paged } from "$lib/server";
 import { error } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */

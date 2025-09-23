@@ -1,29 +1,20 @@
 /** @type {import('./$types').PageServerLoad} */
-import type { ProductDtoView } from '$lib/server';
-import prisma from '$lib/server';
+import { error } from "@sveltejs/kit";
 
-export async function load({ locals }) {
-	const lang: number = locals.lang
-	const products = await prisma.product.findMany({
-		take: 8,
-		where: {
-			active: true,
+export async function load({ url, cookies }) {
+	let cookieString = "";
+	for (const {name, value} of cookies.getAll()) cookieString += `${name}=${value};`;
+	const res = await fetch(url.href, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			"Cookie": cookieString
 		},
-		orderBy: {
-			sortIndex: 'desc'
-		}
 	});
-	const result: ProductDtoView[] = await Promise.all(
-		products.map(async (e) => {
-			return {
-				id: e.id,
-				barcode: e.barcode,
-				name: JSON.parse(e.namesJ)[lang],
-				description: JSON.parse(e.descriptionsJ)[lang],
-				price: e.price,
-				images: JSON.parse(e.imagesJ),
-			};
-		})
-	);
-	return { result }
+	if (res.ok) {
+		const result: { result: HomeDtoView } = await res.json();
+		return result;
+	}
+	throw error(res.status);
 }

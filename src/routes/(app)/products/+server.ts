@@ -1,6 +1,5 @@
 /** @type {import('./$types').RequestHandler} */
 import prisma from '$lib/server';
-import type { Paged, ProductDtoView } from '$lib/server/index.js';
 import { json } from '@sveltejs/kit';
 
 export async function GET({ url, locals }) {

@@ -1,5 +1,5 @@
 /** @type {import('./$types').RequestHandler} */
-import prisma, { type Paged, type CategoryDto, type PostCategoryDto, getTimestampGMT, convertCategory } from "$lib/server";
+import prisma, { getTimestampGMT, convertCategory } from "$lib/server";
 import type { Member } from "@prisma/client";
 import { json } from "@sveltejs/kit";
 

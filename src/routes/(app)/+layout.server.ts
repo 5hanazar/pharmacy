@@ -1,5 +1,5 @@
 /** @type {import('./$types').PageServerLoad} */
-import prisma, { type CategoryDtoView } from "$lib/server/index.js";
+import prisma from "$lib/server/index.js";
 
 export async function load({ locals }) {
 	const lang: number = locals.lang

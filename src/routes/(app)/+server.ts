@@ -1,6 +1,5 @@
 /** @type {import('./$types').RequestHandler} */
 import prisma from "$lib/server";
-import type { ProductDtoView } from "$lib/server/index.js";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ locals }) {
@@ -11,8 +10,8 @@ export async function GET({ locals }) {
 			active: true,
 		},
 	});
+	
 	const list: { code: string; title: string; products: ProductDtoView[] }[] = [];
-
 	for (const category of categories) {
 		const products = await prisma.product.findMany({
 			take: 10,
@@ -49,6 +48,6 @@ export async function GET({ locals }) {
 			description: JSON.parse(e.descriptionsJ)[lang],
 		};
 	});
-
-	return json({ categories: categoryViews, list });
+	const result: HomeDtoView = { categories: categoryViews, list: list };
+	return json(result);
 }

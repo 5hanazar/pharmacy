@@ -1,4 +1,3 @@
-import type { ClientDto } from "$lib/server";
 import { error } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */

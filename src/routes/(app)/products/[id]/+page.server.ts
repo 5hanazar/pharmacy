@@ -1,5 +1,4 @@
 /** @type {import('./$types').PageServerLoad} */
-import type { ProductDtoView } from "$lib/server";
 import { error } from "@sveltejs/kit";
 
 export async function load({ url, cookies }) {

@@ -2,7 +2,7 @@
 import { json } from "@sveltejs/kit";
 import fs from 'fs';
 import { exec } from "child_process";
-import { filePathUploads, type FileDto } from "$lib/server";
+import { filePathUploads } from "$lib/server";
 
 export async function GET({ url }) {
 	const files = fs.readdirSync(filePathUploads, { withFileTypes: true })

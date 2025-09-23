@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Pager from '$lib/Pager.svelte';
 	import ProductCard from '$lib/ProductCard.svelte';
-	export let data: any //{ result: Paged<ProductDtoView>, groupCode: string };
+	export let data: Paged<ProductDtoView>;
 </script>
 
 <section class="container">
