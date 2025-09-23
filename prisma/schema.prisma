@@ -25,19 +25,20 @@ model Member {
 }
 
 model Client {
-    id          Int     @id @default(autoincrement())
+    id          Int      @id @default(autoincrement())
     active      Boolean
-    username    String  @unique @db.VarChar(32)
-    phone       String  @unique @db.VarChar(32)
-    name        String  @db.VarChar(64)
-    description String  @db.VarChar(128)
-    address     String  @db.VarChar(128)
-    devicesJ    String  @db.VarChar(128)
-    hashJwt     String  @db.VarChar(8)
+    username    String   @unique @db.VarChar(32)
+    phone       String   @unique @db.VarChar(32)
+    name        String   @db.VarChar(64)
+    description String   @db.VarChar(128)
+    address     String   @db.VarChar(128)
+    devicesJ    String   @db.VarChar(128)
+    hashJwt     String   @db.VarChar(8)
     createdGmt  Int
     modifiedGmt Int
     imageGmt    Int
     onlineGmt   Int
+    basket      Basket[]
 
     @@map("clients")
 }
@@ -52,17 +53,18 @@ model TempCode {
 }
 
 model Product {
-    id            Int     @id @default(autoincrement())
+    id            Int      @id @default(autoincrement())
     active        Boolean
-    barcode       String  @unique @db.VarChar(32)
-    namesJ        String  @db.VarChar(400)
-    descriptionsJ String  @db.VarChar(1200)
-    keywords      String  @db.VarChar(128)
+    barcode       String   @unique @db.VarChar(32)
+    namesJ        String   @db.VarChar(400)
+    descriptionsJ String   @db.VarChar(1200)
+    keywords      String   @db.VarChar(128)
     price         Float
     sortIndex     Int
-    imagesJ       String  @db.VarChar(128)
+    imagesJ       String   @db.VarChar(128)
     createdGmt    Int
     modifiedGmt   Int
+    basket        Basket[]
 
     @@map("products")
 }
@@ -78,4 +80,17 @@ model Category {
     modifiedGmt   Int
 
     @@map("categories")
+}
+
+model Basket {
+    warehouse  Int
+    productId  Int
+    product    Product @relation(fields: [productId], references: [id])
+    clientId   Int
+    client     Client  @relation(fields: [clientId], references: [id])
+    quantity   Float
+    createdGmt Int
+
+    @@id([warehouse, productId, clientId])
+    @@map("basket")
 }

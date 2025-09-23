@@ -35,6 +35,33 @@ export const convertCategory = (e: any): CategoryDto => {
 		modifiedDate: getRelativeTime(e.modifiedGmt),
 	};
 };
+export const convertProductView = async (e: any, userId: number, lang: number): Promise<ProductDtoView> => {
+	const basket = await prisma.basket.findUnique({
+		where: {
+			warehouse_productId_clientId: {
+				warehouse: 0,
+				productId: e.id,
+				clientId: userId
+			}
+		}
+	});
+	const categories = await prisma.category.findMany({
+		where: {
+			active: true
+		}
+	});
+	return {
+		id: e.id,
+		barcode: e.barcode,
+		name: JSON.parse(e.namesJ)[lang],
+		description: JSON.parse(e.descriptionsJ)[lang],
+		groupName: JSON.parse(categories.find(o => o.code == e.keywords)?.namesJ ?? "")[lang],
+		price: e.price,
+		inBasket: basket?.quantity ?? 0,
+		isFavorite: false,
+		images: JSON.parse(e.imagesJ),
+	};
+};
 
 export const getTimestampGMT = () => {
 	return Math.round(Date.now() / 1000);

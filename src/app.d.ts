@@ -24,6 +24,8 @@ declare global {
 		description: string;
 		groupName: string;
 		price: number;
+		inBasket: number;
+		isFavorite: boolean;
 		images: string[];
 	};
 	type ClientDto = {
@@ -118,6 +120,10 @@ declare global {
 		parentCode: string;
 		names: string[];
 		descriptions: string[];
+	};
+	type PostAdditionDtoView = {
+		productId: number;
+		addition: number;
 	};
 }
 

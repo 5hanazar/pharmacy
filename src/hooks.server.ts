@@ -102,7 +102,7 @@ export async function handle({ event, resolve }) {
 		event.locals.lang = parseInt(myCookie.l || '1') - 1
 		const token = jwt.sign(JSON.stringify(user), PRIVATE_KEY);
 		const response = await resolve(event);
-		response.headers.append(
+		if (createUser) response.headers.append(
 			"Set-Cookie",
 			`pharmacy_user=${token};path=/;SameSite=None;Secure`
 		);

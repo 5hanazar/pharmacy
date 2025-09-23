@@ -1,9 +1,10 @@
 /** @type {import('./$types').RequestHandler} */
-import prisma from '$lib/server';
+import prisma, { convertProductView } from '$lib/server';
 import translations from '$lib/translations.js';
 import { json } from '@sveltejs/kit';
 
 export async function GET({ url, locals }) {
+	const user: ClientDtoView = locals.user;
 	const lang: number = locals.lang
 
 	const pageIndex = parseInt(url.searchParams.get("p") || "1");
@@ -43,28 +44,20 @@ export async function GET({ url, locals }) {
 			sortIndex: 'desc'
 		}
 	});
-	const categories = await prisma.category.findMany({
-		where: {
-			active: true
-		}
-	});
 	const data: ProductDtoView[] = await Promise.all(
 		products.map(async (e) => {
-			return {
-				id: e.id,
-				barcode: e.barcode,
-				name: JSON.parse(e.namesJ)[lang],
-				description: JSON.parse(e.descriptionsJ)[lang],
-				groupName: JSON.parse(categories.find(o => o.code == e.keywords)?.namesJ ?? "")[lang],
-				price: e.price,
-				images: JSON.parse(e.imagesJ),
-			};
+			return await convertProductView(e, user.id, lang)
 		})
 	);
 	const count = await prisma.product.count({
 		where
 	});
 
+	const categories = await prisma.category.findMany({
+		where: {
+			active: true
+		}
+	});
 	const langMap = ["en", "ru", "tk"];
 	const locale = langMap[lang] || "en";
 	const result: Paged<ProductDtoView> & { query: string, groupName: string } = {
