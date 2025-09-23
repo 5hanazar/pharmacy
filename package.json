@@ -37,7 +37,7 @@
 		"jsonwebtoken": "^9.0.1",
 		"panzoom": "^9.4.3",
 		"socket.io-client": "^4.8.1",
-		"swiper": "^11.2.10",
+		"swiper": "^8.4.7",
 		"vanilla-tilt": "^1.8.1"
 	}
 }

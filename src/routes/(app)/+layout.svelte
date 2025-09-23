@@ -11,15 +11,11 @@
 
 	import Preloader from "$lib/Preloader.svelte";
 	import { onMount } from "svelte";
-	import { register } from 'swiper/element/bundle';
-	register();
 
 	export let data: { categories: CategoryDtoView[] };
 
 	let loaded = false;
 	onMount(() => {
-		//const { register } = await import('swiper/element/bundle');
-    	//register();
 		const waitForAssets = new Promise<void>((resolve) => {
 			if (document.readyState === "complete") {
 				resolve();

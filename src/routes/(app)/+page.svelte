@@ -2,6 +2,12 @@
 	import ProductCard from '$lib/ProductCard.svelte';
 	export let data: HomeDtoView;
 
+	import { Swiper, SwiperSlide } from 'swiper/svelte';
+	import 'swiper/css';
+	import 'swiper/css/navigation';
+	import { Navigation } from 'swiper';
+	let modules = [Navigation];
+
 	/*let swiperEl: any;
 	onMount(() => {
 		swiperEl.breakpoints = {
@@ -14,15 +20,28 @@
 <div class="container pb-4">
 {#each data.list as row}
 	<h3 class="display-5 mt-5 mb-3">{row.title}</h3>
-	<swiper-container slides-per-view="4" breakpoints={{0: {slidesPerView: 2}, 992: {slidesPerView: 4}}} navigation="true" loop="true" space-between={'10'}>
+	<Swiper
+		modules={modules}
+		spaceBetween={10}
+		slidesPerView={4}
+		navigation={true}
+		breakpoints={{
+			0: {
+				slidesPerView: 2,
+			},
+			992: {
+				slidesPerView: 4,
+			},
+		}}
+	>
 		{#each row.products as product}
 			{#key product.id}
-			<swiper-slide>
+			<SwiperSlide>
 				<ProductCard product={product} />
-			</swiper-slide>
+			</SwiperSlide>
 			{/key}
 		{/each}
-	</swiper-container>
+	</Swiper>
 {/each}
 </div>
 
