@@ -1,6 +1,20 @@
 <script lang="ts">
 	import { t } from "$lib/i18n";
-	export let product: any;
+	export let product: ProductDtoView;
+		const toBasket = async (addition: number) => {
+		const buf: PostAdditionDtoView = { productId: product.id, addition: addition };
+		const response = await fetch("/basket", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Cookie": document.cookie
+			},
+			body: JSON.stringify(buf),
+		});
+		const res = await response.text();
+		product.inBasket = parseFloat(res)
+	};
 </script>
 
 <div class="card">
@@ -10,11 +24,17 @@
 			{#if product.name.length > 50}
 				{product.name.substring(0, 50)}...<br />
 			{:else}
-				{product.name.substring()}<br />
+				{product.name}<br />
 			{/if}
 		</h5>
 		<p class="card-text">{product.description}</p>
-		<button type="button" class="btn btn-primary">{$t("purchase")}</button>
+		<div class="d-flex gap-3">
+			<button type="button" class="btn btn-primary" on:click={() => toBasket(1)}>{$t("purchase")}</button>
+			{#if product.inBasket > 0}
+				{product.inBasket}
+				<button type="button" class="btn btn-primary" on:click={() => toBasket(-1)}>-</button>
+			{/if}
+		</div>
 	</div>
 </div>
 

@@ -39,6 +39,7 @@ model Client {
     imageGmt    Int
     onlineGmt   Int
     basket      Basket[]
+    orderRequests      OrderRequest[]
 
     @@map("clients")
 }
@@ -65,6 +66,7 @@ model Product {
     createdGmt    Int
     modifiedGmt   Int
     basket        Basket[]
+    orderRequestLines    OrderRequestLine[]
 
     @@map("products")
 }
@@ -93,4 +95,31 @@ model Basket {
 
     @@id([warehouse, productId, clientId])
     @@map("basket")
+}
+
+model OrderRequest {
+    id               Int         @id @default(autoincrement())
+    active           Boolean
+    clientId         Int
+    client           Client      @relation(fields: [clientId], references: [id])
+    phoneToContact   String
+    address          String
+    description      String
+    orderRequestLines       OrderRequestLine[]
+    createdGmt       Int
+    modifiedGmt      Int
+
+    @@map("order_requests")
+}
+
+model OrderRequestLine {
+    line       Int
+    orderRequestId    Int
+    orderRequest      OrderRequest   @relation(fields: [orderRequestId], references: [id])
+    productId  Int
+    product    Product @relation(fields: [productId], references: [id])
+    quantity   Float
+
+    @@id([orderRequestId, productId])
+    @@map("order_request_lines")
 }

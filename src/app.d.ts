@@ -125,6 +125,12 @@ declare global {
 		productId: number;
 		addition: number;
 	};
+	type PostOrderDtoView = {
+		clientName: string;
+		phoneToContact: string;
+		address: string;
+		description: string;
+	};
 }
 
 export {};
