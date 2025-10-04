@@ -102,10 +102,10 @@ model OrderRequest {
     active           Boolean
     clientId         Int
     client           Client      @relation(fields: [clientId], references: [id])
-    phoneToContact   String
-    address          String
-    description      String
-    orderRequestLines       OrderRequestLine[]
+    phoneToContact   String      @db.VarChar(32)
+    address          String      @db.VarChar(128)
+    description      String      @db.VarChar(400)
+    orderRequestLines  OrderRequestLine[]
     createdGmt       Int
     modifiedGmt      Int
 
@@ -122,4 +122,19 @@ model OrderRequestLine {
 
     @@id([orderRequestId, productId])
     @@map("order_request_lines")
+}
+
+model Pharmacy {
+    id            Int     @id  @default(autoincrement())
+    active        Boolean
+    name          String  @unique  @db.VarChar(128)
+    phone         String  @unique  @db.VarChar(32)
+    phonesJ       String  @db.VarChar(128)
+    address       String  @db.VarChar(128)
+    description   String  @db.VarChar(400)
+    password      String  @db.VarChar(32)
+    createdGmt    Int
+    modifiedGmt   Int
+
+    @@map("pharmacies")
 }

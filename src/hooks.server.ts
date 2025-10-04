@@ -44,6 +44,33 @@ export async function handle({ event, resolve }) {
 				event.locals.user = buf;
 			}
 		}
+	} else if (p.startsWith(`${base}/shop`)) {
+		const user: { phone: string; password: string; } | null = await decrypt(myCookie.pharmacy_shop_user);
+		if (p.startsWith(`${base}/shop/login`)) {
+			if (user != null) {
+				const buf = await prisma.pharmacy.findFirst({
+					where: {
+						phone: user.phone,
+						password: user.password,
+						active: true
+					},
+				});
+				if (buf != null) return new Response("", { status: 303, headers: { Location: `${base}/shop` } });
+			}
+		} else {
+			if (user == null) return new Response("", { status: 303, headers: { Location: `${base}/shop/login` } });
+			const buf = await prisma.pharmacy.findFirst({
+				where: {
+					phone: user.phone,
+					password: user.password,
+					active: true
+				},
+			});
+			if (buf == null) return new Response("", { status: 303, headers: { Location: `${base}/shop/login` } });
+			else {
+				event.locals.user = buf;
+			}
+		}
 	} else if (!p.startsWith(`${base}/images`) && !p.startsWith(`${base}/uploads`)) {
 		let user: { id: number; phone: string; hashJwt: string } | null = await decrypt(myCookie.pharmacy_user);
 		let createUser = false;
@@ -104,13 +131,19 @@ export async function handle({ event, resolve }) {
 		const response = await resolve(event);
 		if (createUser) response.headers.append(
 			"Set-Cookie",
-			`pharmacy_user=${token};path=/;SameSite=None;Secure`
+			`pharmacy_user=${token};path=/;SameSite=None;Secure;expires=${getExpireDate()}`
 		);
 		return response;
 	}
 	const response = await resolve(event);
 	return response;
 }
+const getExpireDate = () => {
+	const expireDate = new Date();
+	expireDate.setUTCHours(0, 0, 0);
+	expireDate.setUTCFullYear(expireDate.getUTCFullYear() + 1, 0, 1);
+	return expireDate.toUTCString();
+};
 const decrypt = (token: any, drop = false) =>
 	new Promise<any>(async (resolve, reject) => {
 		if (token == undefined) {

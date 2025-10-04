@@ -73,7 +73,7 @@
 		}
 		return "";
 	}
-    const getExpireDate = () => {
+	const getExpireDate = () => {
 		const expireDate = new Date();
 		expireDate.setUTCHours(0, 0, 0);
 		expireDate.setUTCFullYear(expireDate.getUTCFullYear() + 1, 0, 1);
