@@ -6,8 +6,8 @@ export async function GET({ locals }) {
 	const user: ClientDtoView = locals.user;
 	const lang: number = locals.lang
 	const buf = await prisma.basket.findMany({
-		select: {
-			productId: true
+		include: {
+			product: true
 		},
 		where: {
 			clientId: user.id
@@ -16,21 +16,15 @@ export async function GET({ locals }) {
 			createdGmt: 'asc'
 		}
 	})
-	const productIds = buf.map(e => e.productId);
-	const products = await prisma.product.findMany({
-		where: {
-			id: {
-				in: productIds
-			}
-		}
-	});
-	const result: ProductDtoView[] = await Promise.all(
-		products.map(async (e) => {
-			return await convertProductView(e, user.id, lang)
+	let total: number = 0;
+	const products: ProductDtoView[] = await Promise.all(
+		buf.map(async (e) => {
+			total += e.product.price * e.quantity;
+			return await convertProductView(e.product, user.id, lang)
 		})
 	);
 
-	return json(result);
+	return json({total, products});
 }
 
 export async function POST({ request, locals }) {
