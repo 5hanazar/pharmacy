@@ -1,8 +1,9 @@
 /** @type {import('./$types').RequestHandler} */
-import prisma from "$lib/server";
+import prisma, { convertProductView } from "$lib/server";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ params, locals }) {
+	const user: ClientDtoView = locals.user;
 	const lang: number = locals.lang
 	const id = parseInt(params.id);
 	const e = await prisma.product.findFirstOrThrow({
@@ -11,15 +12,7 @@ export async function GET({ params, locals }) {
 		},
 	});
 
-	const product: ProductDtoView = {
-		id: e.id,
-		barcode: e.barcode,
-		name: JSON.parse(e.namesJ)[lang],
-		description: JSON.parse(e.descriptionsJ)[lang],
-		groupName: "",
-		price: e.price,
-		images: JSON.parse(e.imagesJ),
-	};
+	const product: ProductDtoView = await convertProductView(e, user.id, lang)
 
 	let buf = await prisma.product.findMany({
 		take: 4,
@@ -44,13 +37,7 @@ export async function GET({ params, locals }) {
 	}
 	const similar: ProductDtoView[] = await Promise.all(
 		buf.map(async (e) => {
-			return {
-				id: e.id,
-				barcode: e.barcode,
-				name: JSON.parse(e.namesJ)[lang],
-				description: JSON.parse(e.descriptionsJ)[lang],
-				images: JSON.parse(e.imagesJ),
-			};
+			return await convertProductView(e, user.id, lang)
 		})
 	);
 

@@ -32,6 +32,19 @@ async function main() {
 			onlineGmt: now
 		}
 	})
+	await prisma.pharmacy.create({
+		data: {
+			active: true,
+			name: "aptek",
+			phone: "+99362010203",
+			phonesJ: "[\"+99362010203\"]",
+			address: "magtymguly",
+			description: "[\"tel1\", \"comp1\"]",
+			password: "123",
+			createdGmt: now,
+			modifiedGmt: now,
+		}
+	})
 	console.log(`A new member was inserted.\nName: ${user.username}\nPassword: ${user.password}`);
 }
 main()
