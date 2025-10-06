@@ -5,7 +5,7 @@ import { OrderRequestLine } from "@prisma/client";
 export async function POST({ request, locals }) {
 	const user: ClientDtoView = locals.user;
 	const input = Object.fromEntries(await request.formData());
-	const body: PostOrderDtoView = await JSON.parse(input.data);
+	const body: PostOrderRequestDtoView = await JSON.parse(input.data);
 
 	const basket = await prisma.basket.findMany({
 		include: {
