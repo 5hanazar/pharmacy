@@ -131,6 +131,19 @@ declare global {
 		address: string;
 		description: string;
 	};
+	type OrderRequestDtoView = {
+		phone: string;
+		address: string;
+		description: string;
+		lines: OrderRequestLineDtoView[];
+		createdDate: string;
+	};
+	type OrderRequestLineDtoView = {
+		barcode: string;
+		name: string;
+		description: string;
+		price: number;
+	};
 }
 
 export {};
