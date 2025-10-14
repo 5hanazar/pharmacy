@@ -136,6 +136,7 @@ declare global {
 		address: string;
 		description: string;
 		lines: OrderRequestLineDtoView[];
+		total: number;
 		createdDate: string;
 	};
 	type OrderRequestLineDtoView = {
@@ -143,6 +144,7 @@ declare global {
 		name: string;
 		description: string;
 		price: number;
+		quantity: number;
 	};
 }
 

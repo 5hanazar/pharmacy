@@ -105,7 +105,7 @@ model OrderRequest {
     phoneToContact   String      @db.VarChar(32)
     address          String      @db.VarChar(128)
     description      String      @db.VarChar(400)
-    orderRequestLines  OrderRequestLine[]
+    lines  OrderRequestLine[]
     createdGmt       Int
     modifiedGmt      Int
 

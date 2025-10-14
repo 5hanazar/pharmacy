@@ -36,7 +36,7 @@ export async function GET({ locals }) {
 		});
 	}
 
-	const categoryViews: CategoryDtoView[] = categories.map((e) => {
+	const categoryViews: CategoryDtoView[] = categories.sort((a, b) => b.id - a.id).map((e) => {
 		return {
 			id: e.id,
 			code: e.code,
