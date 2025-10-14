@@ -29,7 +29,7 @@ export default {
 		"purchase": "Купить",
 		"all_products": "Все продукты",
 	},
-	tk: {
+	tm: {
 		"categories": "Kategoriýa",
 		"similar": "Meňzeş harytlar",
 		"all_rights_reserved": "Ähli hukuklary goraglydyr.",

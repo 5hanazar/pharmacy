@@ -81,14 +81,14 @@
 	};
 	if (browser) {
 		const l = getCookie("l");
-		if (l == "1") locale.set("en");
-		else if (l == "2") locale.set("ru");
-		else if (l == "3") locale.set("tk");
+		if (l == "0") locale.set("en");
+		else if (l == "1") locale.set("ru");
+		else if (l == "2") locale.set("tm");
 		locale.subscribe(async (v) => {
 			let l = "";
-			if (v == "en") l = "1";
-			else if (v == "ru") l = "2";
-			else if (v == "tk") l = "3";
+			if (v == "en") l = "0";
+			else if (v == "ru") l = "1";
+			else if (v == "tm") l = "2";
 			document.cookie = `l=${l};path=/;SameSite=None;Secure;expires=${getExpireDate()}`;
 			await invalidateAll();
 		});
@@ -123,8 +123,8 @@
 								{$t("language")}
 							</button>
 							<ul class="dropdown-menu">
-								<li><button class="dropdown-item" on:click={() => setLang('en')}>English</button></li>
 								<li><button class="dropdown-item" on:click={() => setLang('ru')}>Русский</button></li>
+								<li><button class="dropdown-item" on:click={() => setLang('tm')}>Türkmençe</button></li>
 							</ul>
 						</li>
 						<li class="nav-item dropdown">

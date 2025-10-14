@@ -58,7 +58,7 @@ export async function GET({ url, locals }) {
 			active: true
 		}
 	});
-	const langMap = ["en", "ru", "tk"];
+	const langMap = ["en", "ru", "tm"];
 	const locale = langMap[lang] || "en";
 	const result: Paged<ProductDtoView> & { query: string, groupName: string } = {
 		count,

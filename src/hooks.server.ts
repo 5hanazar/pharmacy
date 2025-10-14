@@ -126,7 +126,7 @@ export async function handle({ event, resolve }) {
 		});
 
 		event.locals.user = parseClient(buf!);
-		event.locals.lang = parseInt(myCookie.l || '1') - 1
+		event.locals.lang = parseInt(myCookie.l || '1')
 		const token = jwt.sign(JSON.stringify(user), PRIVATE_KEY);
 		const response = await resolve(event);
 		if (createUser) response.headers.append(
