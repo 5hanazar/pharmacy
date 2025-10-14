@@ -44,16 +44,11 @@ export async function GET({ locals, url }) {
 			};
 		});
 		return {
+			id: e.id,
 			phone: e.phoneToContact,
 			address: e.address,
 			description: e.description,
-			lines: e.lines.map<OrderRequestLineDtoView>((r) => ({
-				barcode: r.product.barcode,
-				name: JSON.parse(r.product.namesJ)[lang],
-				description: JSON.parse(r.product.descriptionsJ)[lang],
-				price: r.product.price,
-				quantity: r.quantity,
-			})),
+			lines: lines,
 			total: total,
 			createdDate: formatTime(e.createdGmt),
 		};

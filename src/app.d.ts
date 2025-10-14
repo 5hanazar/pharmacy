@@ -132,6 +132,7 @@ declare global {
 		description: string;
 	};
 	type OrderRequestDtoView = {
+		id: number;
 		phone: string;
 		address: string;
 		description: string;
