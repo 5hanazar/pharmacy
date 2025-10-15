@@ -12,6 +12,8 @@ export async function GET({ url, locals }) {
 
 	const query = url.searchParams.get("q") || "";
 	const groupCode = url.searchParams.get("g") || "";
+	const ordQ = url.searchParams.get('o') ? url.searchParams.get('o')!.split(';') : ['sortIndex', 'desc']
+	ordQ[1] = ordQ[1] == 'ascending' ? 'asc' : 'desc'
 
 	let where: any = {
 		active: true,
@@ -36,13 +38,14 @@ export async function GET({ url, locals }) {
 		}
 	}
 
+	let orderBy: any = {}
+	orderBy[ordQ[0]] = ordQ[1]
+
 	const products = await prisma.product.findMany({
 		skip: (pageIndex - 1) * size,
 		take: size,
 		where,
-		orderBy: {
-			sortIndex: 'desc'
-		}
+		orderBy
 	});
 	const data: ProductDtoView[] = await Promise.all(
 		products.map(async (e) => {
@@ -58,6 +61,13 @@ export async function GET({ url, locals }) {
 			active: true
 		}
 	});
+
+	let qry = ""
+	url.searchParams.forEach((value: any, key: any) => {
+		if (key != 'p') qry += `&${key}=${value}`
+	});
+	if (qry.length > 0) qry.slice(1);
+
 	const langMap = ["en", "ru", "tm"];
 	const locale = langMap[lang] || "en";
 	const result: Paged<ProductDtoView> & { query: string, groupName: string } = {
@@ -65,7 +75,7 @@ export async function GET({ url, locals }) {
 		data: data,
 		size,
 		pageIndex,
-		query: query.length > 0 ? `q=${query}` : `g=${groupCode}`,
+		query: qry,
 		groupName: groupCode.length > 0 ? JSON.parse(categories.find(o => o.code == groupCode)?.namesJ ?? "")[lang] : translations[locale]['all_products']
 	};
 	return json(result);
