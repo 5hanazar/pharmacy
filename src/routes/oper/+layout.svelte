@@ -28,6 +28,7 @@
 		<SideNavLink text="Клиенты" href={`${base}/oper/clients`} />
 		<SideNavLink text="Товары" href={`${base}/oper/products`} />
 		<SideNavLink text="Категории" href={`${base}/oper/categories`} />
+		<SideNavLink text="Аптеки" href={`${base}/oper/pharmacies`} />
 		<SideNavLink text="Файлы" href={`${base}/oper/files`} />
 	</SideNavItems>
 </SideNav>

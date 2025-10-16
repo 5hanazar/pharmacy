@@ -39,7 +39,7 @@ async function main() {
 			phone: "+99362010203",
 			phonesJ: "[\"+99362010203\"]",
 			address: "magtymguly",
-			description: "[\"tel1\", \"comp1\"]",
+			description: "this is pharma",
 			password: "123",
 			createdGmt: now,
 			modifiedGmt: now,

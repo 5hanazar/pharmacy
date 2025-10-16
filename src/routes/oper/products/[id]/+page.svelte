@@ -3,7 +3,6 @@
 	import { getFileFromUrl, readURL } from "$lib";
 	import { afterNavigate, goto } from "$app/navigation";
 	import { onMount } from "svelte";
-	import type { CategoryDto, PostProductDto, ProductDto } from "$lib/server";
 	import CategoryModal from "$lib/CategoryModal.svelte";
 	export let data: {result: ProductDto, groups: CategoryDto[]};
 	if (!Object.keys(data.result).length)
@@ -14,6 +13,7 @@
 			names: [],
 			descriptions: [],
 			keywords: "",
+			price: 0,
 			sortIndex: 0,
 			images: [],
 			createdDate: "",

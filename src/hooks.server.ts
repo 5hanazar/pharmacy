@@ -1,8 +1,8 @@
 import * as cookie from "cookie";
 import jwt from "jsonwebtoken";
-import prisma, { getTimestampGMT } from "$lib/server";
+import prisma, { formatTime, getRelativeTime, getTimestampGMT } from "$lib/server";
 import { PRIVATE_KEY } from "$env/static/private";
-import type { Client } from "@prisma/client";
+import type { Client, Pharmacy } from "@prisma/client";
 import { base } from "$app/paths";
 
 /** @type {import('@sveltejs/kit').Handle} */
@@ -68,7 +68,7 @@ export async function handle({ event, resolve }) {
 			});
 			if (buf == null) return new Response("", { status: 303, headers: { Location: `${base}/shop/login` } });
 			else {
-				event.locals.user = buf;
+				event.locals.user = parsePharmacy(buf);
 			}
 		}
 	} else if (!p.startsWith(`${base}/images`) && !p.startsWith(`${base}/uploads`)) {
@@ -167,5 +167,18 @@ const parseClient = (e: Client): ClientDtoView => {
 		description: e.description,
 		address: e.address,
 		imageGmt: e.imageGmt
+	}
+};
+const parsePharmacy = (e: Pharmacy): PharmacyDtoView => {
+	return {
+		id: e.id,
+		name: e.name,
+		phone: e.phone,
+		phones: JSON.parse(e.phonesJ),
+		address: e.address,
+		description: e.description,
+		password: e.password,
+		createdDate: formatTime(e.createdGmt),
+		modifiedDate: getRelativeTime(e.modifiedGmt),
 	}
 };

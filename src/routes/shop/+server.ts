@@ -1,10 +1,9 @@
 /** @type {import('./$types').RequestHandler} */
 import prisma, { formatTime } from "$lib/server";
-import { Pharmacy } from "@prisma/client";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ locals, url }) {
-	const user: Pharmacy = locals.user;
+	const user: PharmacyDtoView = locals.user;
 	const lang: number = locals.lang;
 
 	const pageIndex = parseInt(url.searchParams.get("p") || "1");
@@ -24,7 +23,6 @@ export async function GET({ locals, url }) {
 			active: true,
 		},
 	});
-
 
 	const data = buf.map<OrderRequestDtoView>((e) => {
 		let total = 0;

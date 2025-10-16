@@ -16,14 +16,8 @@ export async function POST({ request }) {
 	const token = jwt.sign(JSON.stringify(user), PRIVATE_KEY)
 	return new Response(`pharmacy_shop_user=${token}`, {
 		headers: {
-			'Set-Cookie': `pharmacy_shop_user=${token};path=/;SameSite=None;Secure;expires=${getExpireDate()}`
+			'Set-Cookie': `pharmacy_shop_user=${token};path=/;SameSite=None;Secure`
 		},
 		status: 200
 	});
 }
-const getExpireDate = () => {
-	const expireDate = new Date();
-	expireDate.setUTCHours(0, 0, 0);
-	expireDate.setUTCFullYear(expireDate.getUTCFullYear() + 1, 0, 1);
-	return expireDate.toUTCString();
-};

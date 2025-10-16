@@ -147,6 +147,39 @@ declare global {
 		price: number;
 		quantity: number;
 	};
+	type PharmacyDto = {
+		id: number;
+		active: boolean;
+		name: string;
+		phone: string;
+		phones: string[];
+		address: string;
+		description: string;
+		password: string;
+		createdDate: string;
+		modifiedDate: string;
+	};
+	type PostPharmacyDto = {
+		id: number;
+		active: boolean;
+		name: string;
+		phone: string;
+		phones: string[];
+		address: string;
+		description: string;
+		password: string;
+	};
+	type PharmacyDtoView = {
+		id: number;
+		name: string;
+		phone: string;
+		phones: string[];
+		address: string;
+		description: string;
+		password: string;
+		createdDate: string;
+		modifiedDate: string;
+	};
 }
 
 export {};
