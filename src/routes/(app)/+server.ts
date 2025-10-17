@@ -1,5 +1,5 @@
 /** @type {import('./$types').RequestHandler} */
-import prisma, { convertProductView } from "$lib/server";
+import prisma, { convertProductView, formatTime, getRelativeTime } from "$lib/server";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ locals }) {
@@ -36,6 +36,24 @@ export async function GET({ locals }) {
 		});
 	}
 
+	const buf = await prisma.pharmacy.findMany({
+		take: 8,
+		where: {
+			active: true
+		}
+	})
+	const pharmacies = buf.map(e => ({
+		id: e.id,
+		name: e.name,
+		phone: e.phone,
+		phones: JSON.parse(e.phonesJ),
+		address: e.address,
+		description: e.description,
+		password: e.password,
+		createdDate: formatTime(e.createdGmt),
+		modifiedDate: getRelativeTime(e.modifiedGmt),
+	}))
+
 	const categoryViews: CategoryDtoView[] = categories.sort((a, b) => b.id - a.id).map((e) => {
 		return {
 			id: e.id,
@@ -44,6 +62,6 @@ export async function GET({ locals }) {
 			description: JSON.parse(e.descriptionsJ)[lang],
 		};
 	});
-	const result: HomeDtoView = { categories: categoryViews, list: list };
+	const result: HomeDtoView = { categories: categoryViews, pharmacies: pharmacies, list: list };
 	return json(result);
 }

@@ -9,6 +9,7 @@ declare global {
 	}
 	type HomeDtoView = {
 		categories: CategoryDtoView[];
+		pharmacies: PharmacyDtoView[];
 		list: { code: string; title: string; products: ProductDtoView[] }[];
 	};
 	type CategoryDtoView = {
@@ -176,7 +177,6 @@ declare global {
 		phones: string[];
 		address: string;
 		description: string;
-		password: string;
 		createdDate: string;
 		modifiedDate: string;
 	};

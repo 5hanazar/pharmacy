@@ -177,7 +177,6 @@ const parsePharmacy = (e: Pharmacy): PharmacyDtoView => {
 		phones: JSON.parse(e.phonesJ),
 		address: e.address,
 		description: e.description,
-		password: e.password,
 		createdDate: formatTime(e.createdGmt),
 		modifiedDate: getRelativeTime(e.modifiedGmt),
 	}

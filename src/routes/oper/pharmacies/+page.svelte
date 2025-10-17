@@ -25,6 +25,7 @@
 		{ key: "active", value: "Актив", sort: _ab0 },
 		{ key: "name", value: "Имя", sort: _ab0 },
 		{ key: "phone", value: "Телефон", sort: _ab0 },
+		{ key: "phones", value: "Контакты", sort: false },
 		{ key: "address", value: "Адрес", sort: _ab0 },
 		{ key: "description", value: "Описание", sort: _ab0 },
 		{ key: "password", value: "Пароль", sort: _ab0 },
@@ -65,6 +66,10 @@
 				</OverflowMenu>
 			{:else if cell.key == "active"}
 				<Checkbox checked={cell.value == 1} disabled />
+			{:else if cell.key == "phones"}
+				{#each cell.value as e}
+					{e}<br/>
+				{/each}
 			{:else}
 				{cell.value}
 			{/if}

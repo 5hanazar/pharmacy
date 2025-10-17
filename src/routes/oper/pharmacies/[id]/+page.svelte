@@ -16,6 +16,7 @@
 			createdDate: "",
 			modifiedDate: ""
 		};
+	let phonesInput = data.phones.toString()
 	const submit = async (e: SubmitEvent) => {
 		e.preventDefault();
 		const body: PostPharmacyDto = {
@@ -23,7 +24,7 @@
 			active: data.active,
 			name: data.name,
 			phone: data.phone,
-			phones: data.phones,
+			phones: phonesInput.split(','),
 			address: data.address,
 			description: data.description,
 			password: data.password
@@ -55,6 +56,7 @@
 		<TextInput labelText="Адрес" bind:value={data.address} required />
 		<TextArea labelText="Описание" bind:value={data.description} maxCount={128} />
 		<TextInput labelText="Пароль" bind:value={data.password} required />
+		<TextInput labelText="Контакты" bind:value={phonesInput} required />
 		<Checkbox bind:checked={data.active} labelText="Актив" />
 		<Button type="submit">Submit</Button>
 	</Form>
