@@ -7,7 +7,7 @@ export async function POST({ request }) {
 	const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
 
 	let currentGroup = "";
-	const items: { name: string; price: number; group: string }[] = [];
+	const items: { ruName: string; tmName: string; price: number; group: string }[] = [];
 
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
@@ -15,12 +15,15 @@ export async function POST({ request }) {
 			currentGroup = line.replace("group:", "").trim();
 			continue;
 		}
-		const name = line;
-		const priceLine = lines[i + 1] ?? "";
+
+		const ruName = line;
+		const tmName = lines[i + 1] ?? "";
+		const priceLine = lines[i + 2] ?? "";
 		const price = parseFloat(priceLine);
-		if (name && !isNaN(price)) {
-			items.push({ name, price, group: currentGroup });
-			i++;
+
+		if (ruName && tmName && !isNaN(price)) {
+			items.push({ ruName, tmName, price, group: currentGroup });
+			i += 2;
 		}
 	}
 
@@ -28,7 +31,7 @@ export async function POST({ request }) {
 		data: items.map((item, i) => ({
 			active: true,
 			barcode: (Math.floor(Math.random() * 9000000000) + 1000000000).toString(),
-			namesJ: JSON.stringify(["", item.name, ""]),
+			namesJ: JSON.stringify(["", item.ruName, item.tmName]),
 			descriptionsJ: JSON.stringify(["", "", ""]),
 			keywords: item.group,
 			price: Math.round(item.price * 0.24),
