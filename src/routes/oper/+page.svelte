@@ -1,10 +1,11 @@
 <script lang="ts">
+	import { base } from "$app/paths";
 	export let data;
 	import { Button } from "carbon-components-svelte";
 	let loading = false;
 	const action = async (type: number) => {
 		loading = true;
-		const response = await fetch("/oper", {
+		const response = await fetch(`${base}/oper`, {
 			method: "POST",
 			headers: {
 				Accept: "application/json",
