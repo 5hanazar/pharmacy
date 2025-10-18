@@ -9,9 +9,10 @@ const config = {
 	preprocess: [vitePreprocess(), optimizeImports()],
 	kit: {
 		adapter: adapter({ out: 'adminweb' }),
-        csrf: {
-            checkOrigin: false
-        }
+		paths: { base: '/shypa' },
+		csrf: {
+			checkOrigin: false
+		}
 	}
 };
 

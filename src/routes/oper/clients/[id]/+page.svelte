@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Form, TextInput, Button, Tile, Checkbox, TextArea } from "carbon-components-svelte";
-	import type { ClientDto, PostClientDto } from "$lib/server";
 	import { afterNavigate, goto } from "$app/navigation";
 	import { base } from "$app/paths";
 	export let data: ClientDto;

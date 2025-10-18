@@ -4,6 +4,7 @@
 	import { afterNavigate, goto } from "$app/navigation";
 	import { onMount } from "svelte";
 	import CategoryModal from "$lib/CategoryModal.svelte";
+	import { base } from "$app/paths";
 	export let data: {result: ProductDto, groups: CategoryDto[]};
 	if (!Object.keys(data.result).length)
 		data.result = {
@@ -37,7 +38,7 @@
 		for (let [index, val] of files.entries()) {
 			formData.append("image" + index, val);
 		}
-		const response = await fetch("/oper/products", {
+		const response = await fetch(`${base}/oper/products`, {
 			method: "POST",
 			headers: {
 				Accept: "application/json",
@@ -48,7 +49,7 @@
 			await goto(previousPage, { replaceState: true });
 		} else alert("Error " + response.status);
 	};
-	let previousPage: string = "/oper/products";
+	let previousPage: string = `${base}/oper/products`;
 	afterNavigate((navigaton) => {
 		previousPage += navigaton.from?.url.search || "";
 	});

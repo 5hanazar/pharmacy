@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from "$app/paths";
 	import { t } from "$lib/i18n";
 	export let product: ProductDtoView;
 		const toBasket = async (addition: number) => {
@@ -18,7 +19,7 @@
 </script>
 
 <div class="card">
-	<a href={`/products/${product.id}`}><img src={product.images.length == 0 ? `/no_image.webp` : `/images/${product.images[0]}`} class="card-img-top p-3" alt="" on:error={(e) => e.target.src = "/no_image.webp"} /></a>
+	<a href={`${base}/products/${product.id}`}><img src={product.images.length == 0 ? `/no_image.webp` : `/images/${product.images[0]}`} class="card-img-top p-3" alt="" on:error={(e) => e.target.src = "/no_image.webp"} /></a>
 	<div class="card-body pt-0">
 		<h5 class="card-title mt-0">
 			{#if product.name.length > 50}

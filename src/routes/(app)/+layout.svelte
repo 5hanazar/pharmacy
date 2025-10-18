@@ -58,6 +58,7 @@
 	import { browser } from "$app/environment";
 	import { t, locale } from '$lib/i18n';
 	import { invalidateAll } from "$app/navigation";
+	import { base } from "$app/paths";
 	const getCookie = (cname: any) => {
 		let name = cname + "=";
 		let decodedCookie = decodeURIComponent(document.cookie);
@@ -110,7 +111,7 @@
 	<div class="sticky-top bg-primary z-2 shadow">
 		<header class="navbar navbar-expand-lg" data-bs-theme="dark">
 			<div class="container">
-				<a href="/" class="navbar-brand d-flex gap-3 text-decoration-none align-items-center text-white">
+				<a href="{base}" class="navbar-brand d-flex gap-3 text-decoration-none align-items-center text-white">
 					Pharmacy
 				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,9 +133,9 @@
 								{$t("categories")}
 							</button>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/products">{$t("all_products")}</a></li>
+								<li><a class="dropdown-item" href="{base}/products">{$t("all_products")}</a></li>
 								{#each data.categories as category}
-									<li><a class="dropdown-item" href="/products?g={category.code}">{category.name}</a></li>
+									<li><a class="dropdown-item" href="{base}/products?g={category.code}">{category.name}</a></li>
 								{/each}
 							</ul>
 						</li>

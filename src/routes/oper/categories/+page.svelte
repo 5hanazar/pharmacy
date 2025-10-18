@@ -6,8 +6,9 @@
 	import { page } from "$app/stores";
 	import { goto, invalidateAll } from "$app/navigation";
 	import { browser } from "$app/environment";
+	import { base } from "$app/paths";
 	const destroy = async (id: number) => {
-		const response = await fetch(`/oper/categories/${id}`, {
+		const response = await fetch(`${base}/oper/categories/${id}`, {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -45,7 +46,7 @@
 		if (searchValue != "") arr.push(`q=${searchValue}`);
 		if (sortKey != undefined) arr.push(`o=${sortKey};${sortDirection}`);
 		if (data.pageIndex != 1) arr.push(`p=${data.pageIndex}`);
-		if (browser) await goto(`/oper/categories?${arr.join("&")}`, { replaceState: true });
+		if (browser) await goto(`${base}/oper/categories?${arr.join("&")}`, { replaceState: true });
 		loading = false;
 	};
 	$: sortKey, sortDirection, move();
@@ -58,7 +59,7 @@
 		<svelte:fragment slot="cell" let:row let:cell>
 			{#if cell.key == "overflow"}
 				<OverflowMenu flipped>
-					<OverflowMenuItem href="/oper/categories/{row.id}" text="Edit" />
+					<OverflowMenuItem href="{base}/oper/categories/{row.id}" text="Edit" />
 					<OverflowMenuItem danger text="Delete" on:click={() => destroy(row.id)} />
 				</OverflowMenu>
 			{:else if cell.key == "active"}
@@ -67,7 +68,7 @@
 				{#each cell.value as e}
 					{#if e.length > 50}
 						{e.substring(0, 50)}...<br/>
-					{:else}
+					{:else if e.length != 0}
 						{e.substring()}<br/>
 					{/if}
 				{/each}
@@ -79,7 +80,7 @@
 			<ToolbarContent>
 				<ToolbarSearch persistent bind:value={searchValue} />
 				<Button icon={Search} iconDescription="Search" on:click={() => move()} />
-				<Button icon={Add} kind="ghost" href="/oper/categories/new">Create</Button>
+				<Button icon={Add} kind="ghost" href="{base}/oper/categories/new">Create</Button>
 			</ToolbarContent>
 		</Toolbar>
 	</DataTable>

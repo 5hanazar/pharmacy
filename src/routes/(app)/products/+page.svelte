@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Pager from '$lib/Pager.svelte';
 	import ProductCard from '$lib/ProductCard.svelte';
 	export let data: Paged<ProductDtoView> & { query: string, groupName: string };
@@ -11,7 +12,7 @@
 			<ProductCard product={product} />
 		{/key}
 	{/each}
-	<Pager result={data} link="/products" />
+	<Pager result={data} link="{base}/products" />
 </section>
 
 <style lang="scss">

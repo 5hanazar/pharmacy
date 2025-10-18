@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Form, TextInput, Button, Tile, Checkbox, TextArea } from "carbon-components-svelte";
 	import { afterNavigate, goto } from "$app/navigation";
+	import { base } from "$app/paths";
 	export let data: CategoryDto;
 	if (!Object.keys(data).length)
 		data = {
@@ -26,7 +27,7 @@
 
         const formData = new FormData();
 		formData.append("data", JSON.stringify(body));
-		const response = await fetch("/oper/categories", {
+		const response = await fetch(`${base}/oper/categories`, {
 			method: "POST",
 			headers: {
 				Accept: "application/json",
@@ -37,7 +38,7 @@
 			await goto(previousPage, { replaceState: true });
 		} else alert("Error " + response.status);
 	};
-	let previousPage: string = "/oper/categories";
+	let previousPage: string = `${base}/oper/categories`;
 	afterNavigate((navigaton) => {
 		previousPage += navigaton.from?.url.search || "";
 	});
