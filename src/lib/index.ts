@@ -1,6 +1,8 @@
+import { base } from "$app/paths";
+
 export const getFileFromUrl = async (name: string, url: string) => {
 	try {
-		const response = await fetch("/images" + url);
+		const response = await fetch(`${base}/images` + url);
 		const data = await response.blob();
 		return new File([data], name, {
 			type: data.type,

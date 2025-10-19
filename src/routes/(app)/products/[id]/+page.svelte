@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
+	import { base } from '$app/paths';
 	import { t } from '$lib/i18n';
 	import ImageZoom from '$lib/ImageZoom.svelte';
 	import ProductCard from '$lib/ProductCard.svelte';
@@ -16,7 +17,7 @@
 		<div class="col-lg-6">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-			<img src={data.product.images.length == 0 ? `/no_image.webp` : `/images/${data.product.images[0]}`} class="d-block mx-lg-auto img-fluid" draggable="false" alt={data.product.name} on:error={(e) => e.target.src = "/no_image.webp"} on:click={() => showZoom = true} />
+			<img src={data.product.images.length == 0 ? `${base}/no_image.webp` : `${base}/images/${data.product.images[0]}`} class="d-block mx-lg-auto img-fluid" draggable="false" alt={data.product.name} on:error={(e) => e.target.src = `${base}/no_image.webp`} on:click={() => showZoom = true} />
 		</div>
 		<div class="col-lg-6 pt-4 pt-lg-0 ps-lg-4">
 			<h1 class="display-5">{data.product.name}</h1>
@@ -30,7 +31,7 @@
 		{/each}
 	</section>
 	{#if showZoom}
-		<ImageZoom src={data.product.images.length == 0 ? `/no_image.webp` : `/images/${data.product.images[0]}`} alt="" />
+		<ImageZoom src={data.product.images.length == 0 ? `${base}/no_image.webp` : `${base}/images/${data.product.images[0]}`} alt="" />
 		<button class="zoom-close" on:click={() => showZoom = false} type="button" aria-label="Закрыть">&times;</button>
 	{/if}
 	{/key}
