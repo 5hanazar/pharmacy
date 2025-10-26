@@ -5,8 +5,8 @@ export default prisma;
 
 export const filePath = "C:/Users/User/Documents/shapro/svkit/pharmacy/static/images"
 export const filePathUploads = "C:/Users/User/Documents/shapro/svkit/pharmacy/static/uploads"
-//export const filePath = "/var/www/html/shypa/images"
-//export const filePathUploads = "/var/www/html/shypa/uploads"
+//export const filePath = "/var/www/html/pharmacy/images"
+//export const filePathUploads = "/var/www/html/pharmacy/uploads"
 
 export const convertProduct = async (e: any): Promise<ProductDto> => {
 	return {

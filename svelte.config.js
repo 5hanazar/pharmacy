@@ -9,7 +9,7 @@ const config = {
 	preprocess: [vitePreprocess(), optimizeImports()],
 	kit: {
 		adapter: adapter({ out: 'adminweb' }),
-		paths: { base: '/shypa' },
+		paths: { base: '/pharmacy' },
 		csrf: {
 			checkOrigin: false
 		}

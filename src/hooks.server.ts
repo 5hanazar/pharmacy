@@ -69,6 +69,7 @@ export async function handle({ event, resolve }) {
 			if (buf == null) return new Response("", { status: 303, headers: { Location: `${base}/shop/login` } });
 			else {
 				event.locals.user = parsePharmacy(buf);
+				event.locals.lang = parseInt(myCookie.l || '1')
 			}
 		}
 	} else if (!p.startsWith(`${base}/images`) && !p.startsWith(`${base}/uploads`)) {

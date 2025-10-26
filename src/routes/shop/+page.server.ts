@@ -13,7 +13,7 @@ export async function load({ url, cookies }) {
 		},
 	});
 	if (res.ok) {
-		const result: PharmacyDtoView = await res.json();
+		const result: Paged<OrderRequestDtoView> = await res.json();
 		return result;
 	}
 	throw error(res.status);
