@@ -1,5 +1,6 @@
 /** @type {import('./$types').RequestHandler} */
 import prisma, { convertProductView, formatTime, getRelativeTime } from "$lib/server";
+import { getCache, setCache } from "$lib/server/cache";
 import { Category, Pharmacy } from "@prisma/client";
 import { json } from "@sveltejs/kit";
 
@@ -7,9 +8,21 @@ export async function GET({ locals }) {
 	const user: ClientDtoView = locals.user;
 	const lang: number = locals.lang;
 
-	const categories = await prisma.$queryRaw<Category[]>`SELECT * FROM categories WHERE active = 1 ORDER BY RAND();`;
+	let bufCategories: Category[];
+	let bufPharmacies: Pharmacy[];
+	const cached = getCache('home');
+	if (cached) {
+		const a = JSON.parse(cached);
+		bufCategories = a.bufCategories
+		bufPharmacies = a.bufPharmacies
+	} else {
+		bufCategories = await prisma.$queryRaw<Category[]>`SELECT * FROM categories WHERE active = 1 ORDER BY RAND();`;
+		bufPharmacies = await prisma.$queryRaw<Pharmacy[]>`SELECT * FROM pharmacies WHERE active = 1 ORDER BY RAND() LIMIT 8;`;
+		setCache('home', JSON.stringify({ bufCategories, bufPharmacies }));
+	}
+
 	const list: { code: string; title: string; products: ProductDtoView[] }[] = [];
-	for (const category of categories) {
+	for (const category of bufCategories) {
 		const products = await prisma.product.findMany({
 			take: 10,
 			where: {
@@ -33,8 +46,7 @@ export async function GET({ locals }) {
 		});
 	}
 
-	const buf: Pharmacy[] = await prisma.$queryRaw<Pharmacy[]>`SELECT * FROM pharmacies WHERE active = 1 ORDER BY RAND() LIMIT 8;`;
-	const pharmacies = buf.map(e => ({
+	const pharmacies = bufPharmacies.map(e => ({
 		id: e.id,
 		name: e.name,
 		phone: e.phone,
@@ -46,7 +58,7 @@ export async function GET({ locals }) {
 		modifiedDate: getRelativeTime(e.modifiedGmt),
 	}))
 
-	const categoryViews: CategoryDtoView[] = categories.sort((a, b) => a.id - b.id).map((e) => {
+	const categoryViews: CategoryDtoView[] = bufCategories.sort((a, b) => a.id - b.id).map((e) => {
 		return {
 			id: e.id,
 			code: e.code,
