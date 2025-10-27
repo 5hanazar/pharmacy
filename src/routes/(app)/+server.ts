@@ -1,16 +1,13 @@
 /** @type {import('./$types').RequestHandler} */
 import prisma, { convertProductView, formatTime, getRelativeTime } from "$lib/server";
+import { Category, Pharmacy } from "@prisma/client";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ locals }) {
 	const user: ClientDtoView = locals.user;
 	const lang: number = locals.lang;
 
-	const categories = await prisma.category.findMany({
-		where: {
-			active: true,
-		},
-	});
+	const categories = await prisma.$queryRaw<Category[]>`SELECT * FROM categories WHERE active = 1 ORDER BY RAND();`;
 	const list: { code: string; title: string; products: ProductDtoView[] }[] = [];
 	for (const category of categories) {
 		const products = await prisma.product.findMany({
@@ -36,12 +33,7 @@ export async function GET({ locals }) {
 		});
 	}
 
-	const buf = await prisma.pharmacy.findMany({
-		take: 8,
-		where: {
-			active: true
-		}
-	})
+	const buf: Pharmacy[] = await prisma.$queryRaw<Pharmacy[]>`SELECT * FROM pharmacies WHERE active = 1 ORDER BY RAND() LIMIT 8;`;
 	const pharmacies = buf.map(e => ({
 		id: e.id,
 		name: e.name,
@@ -54,7 +46,7 @@ export async function GET({ locals }) {
 		modifiedDate: getRelativeTime(e.modifiedGmt),
 	}))
 
-	const categoryViews: CategoryDtoView[] = categories.sort((a, b) => b.id - a.id).map((e) => {
+	const categoryViews: CategoryDtoView[] = categories.sort((a, b) => a.id - b.id).map((e) => {
 		return {
 			id: e.id,
 			code: e.code,
