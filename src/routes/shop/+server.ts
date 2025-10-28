@@ -22,6 +22,9 @@ export async function GET({ locals, url }) {
 		where: {
 			active: true,
 		},
+		orderBy: {
+			createdGmt: 'desc'
+		}
 	});
 
 	const data = buf.map<OrderRequestDtoView>((e) => {

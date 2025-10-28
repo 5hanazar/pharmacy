@@ -12,7 +12,7 @@ export async function GET({ url, locals }) {
 
 	const query = url.searchParams.get("q") || "";
 	const groupCode = url.searchParams.get("g") || "";
-	const ordQ = url.searchParams.get('o') ? url.searchParams.get('o')!.split(';') : ['sortIndex', 'desc']
+	const ordQ = url.searchParams.get('o') ? url.searchParams.get('o')!.split(';') : ['sortIndex', 'descending']
 	ordQ[1] = ordQ[1] == 'ascending' ? 'asc' : 'desc'
 
 	let where: any = {
