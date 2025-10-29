@@ -67,6 +67,7 @@ model Product {
     modifiedGmt   Int
     basket        Basket[]
     orderRequestLines    OrderRequestLine[]
+    orderResponseLines    OrderResponseLine[]
 
     @@map("products")
 }
@@ -108,6 +109,7 @@ model OrderRequest {
     lines  OrderRequestLine[]
     createdGmt       Int
     modifiedGmt      Int
+    orderResponses   OrderResponse[]
 
     @@map("order_requests")
 }
@@ -124,6 +126,34 @@ model OrderRequestLine {
     @@map("order_request_lines")
 }
 
+model OrderResponse {
+    id               Int         @id @default(autoincrement())
+    active           Boolean
+    orderRequestId   Int
+    orderRequest     OrderRequest   @relation(fields: [orderRequestId], references: [id])
+    pharmacyId       Int
+    pharmacy         Pharmacy   @relation(fields: [pharmacyId], references: [id])
+    description      String      @db.VarChar(400)
+    lines            OrderResponseLine[]
+    createdGmt       Int
+    modifiedGmt      Int
+
+    @@map("order_responses")
+}
+
+model OrderResponseLine {
+    line            Int
+    orderResponseId Int
+    orderResponse   OrderResponse   @relation(fields: [orderResponseId], references: [id])
+    productId       Int
+    product         Product @relation(fields: [productId], references: [id])
+    price           Float
+    quantity        Float
+
+    @@id([orderResponseId, productId])
+    @@map("order_response_lines")
+}
+
 model Pharmacy {
     id            Int     @id  @default(autoincrement())
     active        Boolean
@@ -135,6 +165,7 @@ model Pharmacy {
     password      String  @db.VarChar(32)
     createdGmt    Int
     modifiedGmt   Int
+    orderResponses   OrderResponse[]
 
     @@map("pharmacies")
 }

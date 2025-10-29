@@ -148,6 +148,16 @@ declare global {
 		price: number;
 		quantity: number;
 	};
+	type PostOrderResponseDtoView = {
+		orderRequestId: number;
+		description: string;
+		lines: PostOrderResponseLineDtoView[]
+	};
+	type PostOrderResponseLineDtoView = {
+		productId: number;
+		price: number;
+		quantity: number;
+	};
 	type PharmacyDto = {
 		id: number;
 		active: boolean;

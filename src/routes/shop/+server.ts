@@ -1,5 +1,6 @@
 /** @type {import('./$types').RequestHandler} */
-import prisma, { formatTime } from "$lib/server";
+import prisma, { formatTime, getTimestampGMT } from "$lib/server";
+import { OrderResponseLine } from "@prisma/client";
 import { json } from "@sveltejs/kit";
 
 export async function GET({ locals, url }) {
@@ -64,4 +65,34 @@ export async function GET({ locals, url }) {
 	};
 
 	return json(result);
+}
+
+export async function POST({ request, locals }) {
+	const user: PharmacyDtoView = locals.user;
+	const input = Object.fromEntries(await request.formData());
+	const body: PostOrderResponseDtoView = await JSON.parse(input.data);
+
+	const r = await prisma.orderResponse.create({
+		data: {
+			active: true,
+			orderRequestId: body.orderRequestId,
+			pharmacyId: user.id,
+			description: body.description,
+			createdGmt: getTimestampGMT(),
+			modifiedGmt: getTimestampGMT(),
+		}
+	})
+
+	const linesP: OrderResponseLine[] = []
+	body.lines.forEach((e, i) => {
+		linesP.push({ line: i + 1, orderResponseId: r.id, productId: e.productId, price: e.price, quantity: e.quantity })
+	})
+
+	await prisma.orderResponseLine.createMany({
+		data: linesP
+	})
+
+	return new Response("", {
+		status: 200,
+	});
 }
