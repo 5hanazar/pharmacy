@@ -33,6 +33,7 @@ export async function GET({ locals, url }) {
 		const lines = e.lines.map<OrderRequestLineDtoView>((r) => {
 			total += r.product.price * r.quantity
 			return {
+				id: r.productId,
 				barcode: r.product.barcode,
 				name: JSON.parse(r.product.namesJ)[lang],
 				description: JSON.parse(r.product.descriptionsJ)[lang],

@@ -35,9 +35,10 @@ export async function GET({ locals, url }) {
 		buf.map(async (e) => {
 			const responses = await getResponses(lang, e.id);
 			let total = 0;
-			const lines = e.lines.map((r) => {
+			const lines = e.lines.map<OrderRequestLineDtoView>((r) => {
 				total += r.product.price * r.quantity;
 				return {
+					id: r.productId,
 					barcode: r.product.barcode,
 					name: JSON.parse(r.product.namesJ)[lang],
 					description: JSON.parse(r.product.descriptionsJ)[lang],

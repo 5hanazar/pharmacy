@@ -143,6 +143,7 @@ declare global {
 		responses: OrderResponseDtoView[];
 	};
 	type OrderRequestLineDtoView = {
+		id: number;
 		barcode: string;
 		name: string;
 		description: string;
@@ -166,11 +167,6 @@ declare global {
 		description: string;
 		price: number;
 		quantity: number;
-	};
-	type PostOrderResponseDtoView = {
-		orderRequestId: number;
-		description: string;
-		lines: PostOrderResponseLineDtoView[]
 	};
 	type PostOrderResponseLineDtoView = {
 		productId: number;
