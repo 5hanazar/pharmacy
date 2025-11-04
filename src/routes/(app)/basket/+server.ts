@@ -17,14 +17,16 @@ export async function GET({ locals }) {
 		}
 	})
 	let total: number = 0;
+	let amount: number = 0;
 	const products: ProductDtoView[] = await Promise.all(
 		buf.map(async (e) => {
 			total += e.product.price * e.quantity;
+			amount += e.quantity
 			return await convertProductView(e.product, user.id, lang)
 		})
 	);
 
-	return json({total, products});
+	return json({total, amount, products});
 }
 
 export async function POST({ request, locals }) {

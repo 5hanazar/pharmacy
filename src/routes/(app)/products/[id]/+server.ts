@@ -15,16 +15,16 @@ export async function GET({ params, locals }) {
 	const product: ProductDtoView = await convertProductView(e, user.id, lang)
 
 	let buf = await prisma.product.findMany({
-		take: 4,
+		take: 6,
 		where: {
 			id: {
 				gt: id,
 			},
 		},
 	});
-	if (buf.length < 4) {
+	if (buf.length < 6) {
 		buf = await prisma.product.findMany({
-			take: 4,
+			take: 6,
 			where: {
 				id: {
 					lt: id,

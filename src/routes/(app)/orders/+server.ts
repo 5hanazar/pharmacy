@@ -31,28 +31,32 @@ export async function GET({ locals, url }) {
 		}
 	});
 
-	const data = buf.map<OrderRequestDtoView>((e) => {
-		let total = 0;
-		const lines = e.lines.map<OrderRequestLineDtoView>((r) => {
-			total += r.product.price * r.quantity
+	const data = await Promise.all(
+		buf.map(async (e) => {
+			const responses = await getResponses(lang, e.id);
+			let total = 0;
+			const lines = e.lines.map((r) => {
+				total += r.product.price * r.quantity;
+				return {
+					barcode: r.product.barcode,
+					name: JSON.parse(r.product.namesJ)[lang],
+					description: JSON.parse(r.product.descriptionsJ)[lang],
+					price: r.product.price,
+					quantity: r.quantity,
+				};
+			});
 			return {
-				barcode: r.product.barcode,
-				name: JSON.parse(r.product.namesJ)[lang],
-				description: JSON.parse(r.product.descriptionsJ)[lang],
-				price: r.product.price,
-				quantity: r.quantity,
+				id: e.id,
+				phone: e.phoneToContact,
+				address: e.address,
+				description: e.description,
+				lines: lines,
+				total: Math.round(total * 100) / 100,
+				createdDate: formatTime(e.createdGmt),
+				responses: responses,
 			};
-		});
-		return {
-			id: e.id,
-			phone: e.phoneToContact,
-			address: e.address,
-			description: e.description,
-			lines: lines,
-			total: total,
-			createdDate: formatTime(e.createdGmt),
-		};
-	});
+		})
+	);
 
 	const count = await prisma.orderRequest.count({
 		where: {
@@ -69,4 +73,54 @@ export async function GET({ locals, url }) {
 	};
 
 	return json(result);
+}
+
+
+const getResponses = async (lang: number, requestId: number) => {
+	const buf = await prisma.orderResponse.findMany({
+		include: {
+			pharmacy: true,
+			lines: {
+				include: {
+					product: true,
+				},
+				orderBy: {
+					line: 'asc'
+				}
+			},
+		},
+		where: {
+			orderRequestId: requestId
+		},
+		orderBy: {
+			createdGmt: 'desc'
+		}
+	});
+
+	const data = buf.map<OrderResponseDtoView>((e) => {
+		let total = 0;
+		const lines = e.lines.map<OrderResponseLineDtoView>((r) => {
+			total += r.price * r.quantity
+			return {
+				barcode: r.product.barcode,
+				name: JSON.parse(r.product.namesJ)[lang],
+				description: JSON.parse(r.product.descriptionsJ)[lang],
+				price: r.price,
+				quantity: r.quantity,
+			};
+		});
+		return {
+			id: e.id,
+			pharmacyId: e.pharmacyId,
+			pharmacyName: e.pharmacy.name,
+			pharmacyPhone: e.pharmacy.phone,
+			pharmacyAddress: e.pharmacy.address,
+			description: e.description,
+			lines: lines,
+			total: Math.round(total * 100) / 100,
+			createdDate: formatTime(e.createdGmt),
+		};
+	});
+
+	return data;
 }

@@ -140,11 +140,40 @@ declare global {
 		lines: OrderRequestLineDtoView[];
 		total: number;
 		createdDate: string;
+		responses: OrderResponseDtoView[];
 	};
 	type OrderRequestLineDtoView = {
 		barcode: string;
 		name: string;
 		description: string;
+		price: number;
+		quantity: number;
+	};
+	type OrderResponseDtoView = {
+		id: number;
+		pharmacyId: number;
+		pharmacyName: string;
+		pharmacyPhone: string;
+		pharmacyAddress: string;
+		description: string;
+		lines: OrderResponseLineDtoView[]
+		total: number;
+		createdDate: string;
+	};
+	type OrderResponseLineDtoView = {
+		barcode: string;
+		name: string;
+		description: string;
+		price: number;
+		quantity: number;
+	};
+	type PostOrderResponseDtoView = {
+		orderRequestId: number;
+		description: string;
+		lines: PostOrderResponseLineDtoView[]
+	};
+	type PostOrderResponseLineDtoView = {
+		productId: number;
 		price: number;
 		quantity: number;
 	};

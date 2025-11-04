@@ -48,6 +48,7 @@ export async function GET({ locals, url }) {
 			lines: lines,
 			total: total,
 			createdDate: formatTime(e.createdGmt),
+			responses: []
 		};
 	});
 
@@ -71,6 +72,18 @@ export async function POST({ request, locals }) {
 	const user: PharmacyDtoView = locals.user;
 	const input = Object.fromEntries(await request.formData());
 	const body: PostOrderResponseDtoView = await JSON.parse(input.data);
+
+	const _check = await prisma.orderResponse.findFirst({
+		where: {
+			orderRequestId: body.orderRequestId,
+			pharmacyId: user.id,
+		}
+	})
+	if (_check != null) {
+		return new Response("", {
+			status: 200,
+		});
+	}
 
 	const r = await prisma.orderResponse.create({
 		data: {

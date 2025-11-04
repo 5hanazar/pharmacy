@@ -8,11 +8,11 @@ export async function GET({ url, locals }) {
 	const lang: number = locals.lang
 
 	const pageIndex = parseInt(url.searchParams.get("p") || "1");
-	const size = parseInt(url.searchParams.get("s") || "8");
+	const size = parseInt(url.searchParams.get("s") || "12");
 
 	const query = url.searchParams.get("q") || "";
 	const groupCode = url.searchParams.get("g") || "";
-	const ordQ = url.searchParams.get('o') ? url.searchParams.get('o')!.split(';') : ['sortIndex', 'descending']
+	const ordQ = url.searchParams.get('o') ? url.searchParams.get('o')!.split(';') : ['id', 'descending']
 	ordQ[1] = ordQ[1] == 'ascending' ? 'asc' : 'desc'
 
 	let where: any = {
