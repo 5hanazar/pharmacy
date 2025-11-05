@@ -18,6 +18,9 @@ export async function GET({ locals, url }) {
 				include: {
 					product: true,
 				},
+				orderBy: {
+					line: 'asc'
+				}
 			},
 		},
 		where: {
@@ -64,6 +67,7 @@ export async function GET({ locals, url }) {
 		data: data,
 		size,
 		pageIndex,
+		username: user.name
 	};
 
 	return json(result);
